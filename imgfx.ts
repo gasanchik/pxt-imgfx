@@ -60,26 +60,40 @@ namespace helpers {
 
 
 namespace imgfx {
-    export function squishImageX(imag: Image, stretch: number, time: number) {
-        const og = imag.clone()
-        let out = image.create(og.width, og.height)
-        let buf: Buffer = Buffer.create(og.height)
-        for (let x = 0; x < og.width; x++) {
-            og.getRows(Math.mod((x + Math.sin(x / 10 + (time / 1000)) * stretch), og.width), buf)
+    export function squishImageX(img: Image, stretch: number, time: number) {
+        let w = img.width
+        let h = img.height
+        const og = img.clone()
+        let out = image.create(w, h)
+        let buf: Buffer = Buffer.create(h)
+        for (let x = 0; x < w; x++) {
+            og.getRows(Math.mod((x + Math.sin(x / 10 + (time / 1000)) * stretch), w), buf)
             out.setRows(x, buf)
         }
         return out
     }
 
-    export function squishImageY(imag: Image, stretch: number, time: number) {
-        const og = imag.clone()
-        let out = image.create(og.width, og.height)
-        let buf: Buffer = Buffer.create(og.width)
-        for (let x = 0; x < og.width; x++) {
-            og.getColumns(Math.mod((x + Math.sin(x / 10 + (time / 1000)) * stretch), og.width), buf)
+    export function squishImageY(img: Image, stretch: number, time: number) {
+        let w = img.width
+        let h = img.height
+        const og = img.clone()
+        let out = image.create(w, h)
+        let buf: Buffer = Buffer.create(w)
+        for (let x = 0; x < w; x++) {
+            og.getColumns(Math.mod((x + Math.sin(x / 10 + (time / 1000)) * stretch), w), buf)
             out.setColumns(x, buf)
         }
         return out
+    }
+
+    export function heatY(img: Image, stretch: number, height:number, time: number) {
+        let w = img.width
+        let h = img.height
+        const og = img.clone()
+        for (let i = 0; i < w; i++) {
+            screen.blitRow(i, (Math.sin((time / 1000) + (i * stretch)) * height) - (height/2), og, i, 160+height)
+        }
+        return og
     }
 }
 
