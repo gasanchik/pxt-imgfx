@@ -129,19 +129,18 @@ namespace imgfx {
         let h = img.height
         //let imageData : number[] = []
         let og = img.clone()
-        for (let x = 0; x < w; x++) {
-            for (let y = 0; y < h; y++) {
-                //let lightRamp = Fx.toFloat(cosLightAngle);
-                //const ditherOffset = Math.floor(lightRamp * 17) * 4;
-                let lightRamp = 1 + threshold
-                const ditherOffset = Math.floor(lightRamp * 17) * 4;
-                let screeny = h + y
+        for (let y = 0; y < h; y++) {
+            const screeny = (h >> 1) + (y | 0) - 1;
+            for (let x = 0; x < w; x++) {
+                const ditherOffset = Math.floor(Math.mod(threshold, 17)) * 4;
                 let screenx = (w >> 1) + (x | 0);
                 let ditherX = ditherOffset + (screenx % 4);
                 let ditherY = screeny % 4;
                 let ditherPixel = Dither.getPixel(ditherX, ditherY);
                 let shaded = ditherPixel ? 1 : 0;
-                img.setPixel(x,y,img.getPixel(x,y)+shaded)
+                if (shaded>=1) {
+                    og.setPixel(x, y, color)
+                }
             }
         }
         return og

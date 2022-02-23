@@ -122,11 +122,11 @@ let img3 = img`
     9999999999999666666666666666666666666666667777777769999999999999999999999999999999999999999996666666666666666666666666666677777777699999999999999999999999999999
 `
 let a = 16
-img3.getColumns(1, Buffer.create(120))
+scene.setBackgroundColor(3)
 scene.createRenderable(0, (target: Image, camera: scene.Camera) => {
     //let img1 = imgfx.squishImageY(img3, 5, game.runtime() * 2)
     //let img1 = imgfx.heatY(img3, 0.1, 5, game.runtime()*5, true)
-    let img1 = imgfx.dither(img3, a, 15)
+    let img1 = imgfx.dither(img3, a, 0)
     scene.setBackgroundImage(img1)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
