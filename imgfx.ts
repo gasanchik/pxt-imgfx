@@ -10,7 +10,7 @@ interface Image {
     //% helper=setColumns
     setColumns(y: number, dst: Buffer): void;
     //% helper=blitColumn
-    blitColumn(y: number, dst: Buffer): void;
+    blitColumn(x: number, y: number, from: Image, fromY: number, fromW: number): void;
 }
 
 namespace helpers {
@@ -19,7 +19,6 @@ namespace helpers {
     //declare function _setColumns(img: Image, y: number, dst: Buffer): void;
 
     export function getColumns(img: Image, y : number, dst: Buffer): void {
-        let dp = 0
         let sp = 0
         let w = img.width
         let h = img.height
@@ -27,7 +26,7 @@ namespace helpers {
             return
         }
 
-        dst.setUint8(dp, img.getPixel(0, y))
+        dst.setUint8(1, img.getPixel(0, y))
         let n = Math.min(dst.length, (w - y) * h)
         //uint8_t * dp = dst.data;
         //let n = min(dst.length, (w - x) * h) >> 1;
@@ -40,7 +39,6 @@ namespace helpers {
     }
 
     export function setColumns(img: Image, y: number, src: Buffer): void {
-        let dp = 0
         let sp = 0
         let w = img.width
         let h = img.height
@@ -54,12 +52,12 @@ namespace helpers {
 
         while (n--) {
             img.setPixel(sp, y, src[sp])
-            sp += 1
+            sp++;
         }
         return
     }
 
-    export function blitColumn(img: Image, x:number, y:number, from: Image): void {
+    export function blitColumn(img: Image, x:number, y:number, from: Image, fromY:number, fromW:number): void {
 
     }
 }
@@ -91,9 +89,9 @@ namespace imgfx {
         const og = img.clone()
         let out = image.create(w, h)
         let buf: Buffer = Buffer.create(w)
-        for (let x = 0; x < w; x++) {
-            og.getColumns(Math.mod((x + Math.sin(x / 10 + (time / 1000)) * stretch), w), buf)
-            out.setColumns(x, buf)
+        for (let y = 0; y < h; y++) {
+            og.getColumns(Math.mod((y + Math.sin(y / 10 + (time / 1000)) * stretch), h), buf)
+            out.setColumns(y, buf)
         }
         return out
     }
@@ -113,18 +111,20 @@ namespace imgfx {
         return out
     }
 
-    export function heatX(img: Image, stretch: number, height:number, time: number) {
+    export function heatX(img: Image, stretch: number, width: number, time: number, oscillate: Boolean) {
         let w = img.width
         let h = img.height
         const og = img.clone()
         let out = image.create(w, h)
-        for (let x = 0; x < w; x++) {
-            out.blitRow(x, (Math.sin((time / 1000) + (x * stretch)) * height) - (height / 2), og, x, 160+height)
+        let buf: Buffer = Buffer.create(w)
+        for (let y = 0; y < h; y++) {
+            og.getColumns(Math.mod((y + Math.sin(y / 10 + (time / 1000)) * stretch), h), buf)
+            out.setColumns(y, buf)
         }
         return out
     }
 
-    export function dither(img: Image, threshold : number, color : number) {
+    export function dither(img: Image, threshold : number, color : number = 0, img2 : Image = null) {
         let w = img.width
         let h = img.height
         //let imageData : number[] = []
@@ -140,6 +140,9 @@ namespace imgfx {
                 let shaded = ditherPixel ? 1 : 0;
                 if (shaded>=1) {
                     og.setPixel(x, y, color)
+                    if (img2 != null) {
+                        og.setPixel(x, y, img2.getPixel(x,y))
+                    }
                 }
             }
         }
