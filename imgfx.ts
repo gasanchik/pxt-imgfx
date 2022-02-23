@@ -9,14 +9,16 @@ interface Image {
     getColumns(y: number, dst: Buffer): void;
     //% helper=setColumns
     setColumns(y: number, dst: Buffer): void;
+    //% helper=blitColumn
+    blitColumn(y: number, dst: Buffer): void;
 }
 
 namespace helpers {
-    declare function _getColumns(img: Image, y: number, dst: Buffer): void;
+    //declare function _getColumns(img: Image, y: number, dst: Buffer): void;
 
-    declare function _setColumns(img: Image, y: number, dst: Buffer): void;
+    //declare function _setColumns(img: Image, y: number, dst: Buffer): void;
 
-    export function getColumns(img: Image, y: number, dst: Buffer): void {
+    export function getColumns(img: Image, y : number, dst: Buffer): void {
         let dp = 0
         let sp = 0
         let w = img.width
@@ -56,10 +58,20 @@ namespace helpers {
         }
         return
     }
+
+    export function blitColumn(img: Image, x:number, y:number, from: Image): void {
+
+    }
 }
 
 
 namespace imgfx {
+    const Dither = img`
+        1 1 1 1 . 1 1 1 . 1 1 1 . 1 1 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . . . 1 . . . 1 . . . 1 . . . .
+        1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 . 1 1 1 . 1 1 1 . 1 1 1 . 1 . . . 1 . . . 1 . . . 1 . . . . . . . . . . . . . . . . . . . . .
+        1 1 1 1 1 1 1 1 1 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . . . . . . . . . .
+        1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 . 1 . 1 . 1 . 1 . 1 . 1 . . . 1 . . . . . . . . . . . . . . . . . . . . . . . . .
+    `;
     export function squishImageX(img: Image, stretch: number, time: number) {
         let w = img.width
         let h = img.height
@@ -86,12 +98,51 @@ namespace imgfx {
         return out
     }
 
-    export function heatY(img: Image, stretch: number, height:number, time: number) {
+    export function heatY(img: Image, stretch: number, height: number, time: number, oscillate : Boolean) {
         let w = img.width
         let h = img.height
         const og = img.clone()
-        for (let i = 0; i < w; i++) {
-            screen.blitRow(i, (Math.sin((time / 1000) + (i * stretch)) * height) - (height/2), og, i, 160+height)
+        let out = image.create(w, h)
+        for (let x = 0; x < w; x++) {
+            let sin = (Math.sin((time / 1000) + (x * stretch)) * height)
+            if (oscillate == true && x % 2 == 0) {
+                sin *= -1
+            }
+            out.blitRow(x, sin - (height / 2), og, x, 161 + height)
+        } 
+        return out
+    }
+
+    export function heatX(img: Image, stretch: number, height:number, time: number) {
+        let w = img.width
+        let h = img.height
+        const og = img.clone()
+        let out = image.create(w, h)
+        for (let x = 0; x < w; x++) {
+            out.blitRow(x, (Math.sin((time / 1000) + (x * stretch)) * height) - (height / 2), og, x, 160+height)
+        }
+        return out
+    }
+
+    export function dither(img: Image, threshold : number, color : number) {
+        let w = img.width
+        let h = img.height
+        //let imageData : number[] = []
+        let og = img.clone()
+        for (let x = 0; x < w; x++) {
+            for (let y = 0; y < h; y++) {
+                //let lightRamp = Fx.toFloat(cosLightAngle);
+                //const ditherOffset = Math.floor(lightRamp * 17) * 4;
+                let lightRamp = 1 + threshold
+                const ditherOffset = Math.floor(lightRamp * 17) * 4;
+                let screeny = h + y
+                let screenx = (w >> 1) + (x | 0);
+                let ditherX = ditherOffset + (screenx % 4);
+                let ditherY = screeny % 4;
+                let ditherPixel = Dither.getPixel(ditherX, ditherY);
+                let shaded = ditherPixel ? 1 : 0;
+                img.setPixel(x,y,img.getPixel(x,y)+shaded)
+            }
         }
         return og
     }
