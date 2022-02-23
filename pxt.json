@@ -9,7 +9,7 @@
         "main.ts",
         "README.md",
         "assets.json",
-        "screenfx.ts"
+        "imgfx.ts"
     ],
     "testFiles": [
         "test.ts"
