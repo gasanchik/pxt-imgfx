@@ -125,8 +125,9 @@ let a = 16
 scene.setBackgroundColor(15)
 scene.createRenderable(0, (target: Image, camera: scene.Camera) => {
     let img1 = img3
-    //img1 = imgfx.squishImageY(img1, 5, game.runtime() * 2)
-    img1 = imgfx.heatX(img1, 0.1, 5, game.runtime() * 5, false)
+    img1 = imgfx.squishImageY(img1, 5, game.runtime() * 2)
+    //img1 = imgfx.heatX(img1, 0.1, 5, game.runtime() * 5, true)
+    //img1 = imgfx.heatY(img1, 0.1, 5, game.runtime() * 5, true)
     //img1 = imgfx.squishImageX(img1, 5, game.runtime() * 2)
     img1 = imgfx.dither(img1, a)
     scene.setBackgroundImage(img1)

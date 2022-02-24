@@ -8,7 +8,7 @@ interface Image {
     //% helper=getColumns
     getColumns(y: number, dst: Buffer): void;
     //% helper=setColumns
-    setColumns(y: number, dst: Buffer): void;
+    setColumns(y: number, dst: Buffer, offset: Number): void;
     //% helper=blitColumn
     blitColumn(x: number, y: number, from: Image, fromY: number, fromW: number): void;
 }
@@ -38,8 +38,9 @@ namespace helpers {
         return
     }
 
-    export function setColumns(img: Image, y: number, src: Buffer): void {
+    export function setColumns(img: Image, y: number, src: Buffer, offset: number): void {
         let sp = 0
+        offset = offset || 0
         let w = img.width
         let h = img.height
         if (y >= h || y < 0) {
@@ -51,7 +52,7 @@ namespace helpers {
         //let n = min(dst.length, (w - x) * h) >> 1;
 
         while (n--) {
-            img.setPixel(sp, y, src[sp])
+            img.setPixel(Math.mod((sp + offset), screen.width), y, src[sp])
             sp++;
         }
         return
@@ -91,7 +92,7 @@ namespace imgfx {
         let buf: Buffer = Buffer.create(w)
         for (let y = 0; y < h; y++) {
             og.getColumns(Math.mod((y + Math.sin(y / 10 + (time / 1000)) * stretch), h), buf)
-            out.setColumns(y, buf)
+            out.setColumns(y, buf, 0)
         }
         return out
     }
@@ -118,8 +119,12 @@ namespace imgfx {
         let out = image.create(w, h)
         let buf: Buffer = Buffer.create(w)
         for (let y = 0; y < h; y++) {
-            og.getColumns(Math.mod((y + Math.sin(y / 10 + (time / 1000)) * stretch), h), buf)
-            out.setColumns(y, buf)
+            let sin = (Math.sin((time / 1000) + (y * stretch)) * width)
+            if (oscillate == true && y % 2 == 0) {
+                sin *= -1
+            }
+            og.getColumns(y, buf)
+            out.setColumns(y, buf, sin)
         }
         return out
     }
