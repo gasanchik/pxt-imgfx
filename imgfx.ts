@@ -1,6 +1,9 @@
 namespace Math {
     export function mod(a: number, n: number): number {
-        return ((a % n) + n) % n;
+        if (n == 0) {
+            return a
+        }
+        return (((a % n) + n) % n);
     }
 }
 
@@ -78,7 +81,8 @@ namespace imgfx {
         let out = image.create(w, h)
         let buf: Buffer = Buffer.create(h)
         for (let x = 0; x < w; x++) {
-            og.getRows(Math.mod((x + Math.sin(x / 10 + (time / 1000)) * stretch), w), buf)
+            let sin = Math.mod((x + Math.sin(x / 10 + (time / 1000)) * stretch), w)
+            og.getRows(sin, buf)
             out.setRows(x, buf)
         }
         return out
@@ -91,8 +95,9 @@ namespace imgfx {
         let out = image.create(w, h)
         let buf: Buffer = Buffer.create(w)
         for (let y = 0; y < h; y++) {
-            og.getColumns(Math.mod((y + Math.sin(y / 10 + (time / 1000)) * stretch), h), buf)
-            out.setColumns(y, buf, 0)
+            //let sin = (Math.sin((time / 1000) + (y * stretch)) * stretch)
+            let sin = Math.sin(y / 10 + (time / 1000)) * stretch
+            out.blit(0, y, w, h, img, 0, y - sin, w, h, false, false)
         }
         return out
     }
@@ -103,11 +108,11 @@ namespace imgfx {
         const og = img.clone()
         let out = image.create(w, h)
         for (let x = 0; x < w; x++) {
-            let sin = (Math.sin((time / 1000) + (x * stretch)) * height)
+            let sin = (Math.sin((time / 1000) + (stretch * x)) * height)
             if (oscillate == true && x % 2 == 0) {
                 sin *= -1
             }
-            out.blitRow(x, sin - (height / 2), og, x, 161 + height)
+            out.blitRow(x, sin*1, og, x, w)
         } 
         return out
     }
@@ -117,28 +122,28 @@ namespace imgfx {
         let h = img.height
         const og = img.clone()
         let out = image.create(w, h)
-        let buf: Buffer = Buffer.create(w)
+        //let buf: Buffer = Buffer.create(w)
         for (let y = 0; y < h; y++) {
             let sin = (Math.sin((time / 1000) + (y * stretch)) * width)
             if (oscillate == true && y % 2 == 0) {
-                sin *= -1
+                //sin *= -1
             }
-            og.getColumns(y, buf)
-            out.setColumns(y, buf, sin)
+            //out.blit(sin, y, w, h, img, 0, y, w, h, false, false)
+            out.blit(0, y+sin, w, h, img, 0, y, w, h, false, false)
         }
         return out
     }
 
-    export function dither(img: Image, threshold : number, color : number = 0, img2 : Image = null) {
+    export function dither(img: Image, threshold: number, color: number = 0, img2: Image = null, offx: number = 0, offy: number = 0) {
         let w = img.width
         let h = img.height
         //let imageData : number[] = []
         let og = img.clone()
         for (let y = 0; y < h; y++) {
-            const screeny = (h >> 1) + (y | 0) - 1;
+            const screeny = (h >> 1) + (y | 0) - 1 + Math.abs(offy)
             for (let x = 0; x < w; x++) {
                 const ditherOffset = Math.floor(Math.mod(threshold, 17)) * 4;
-                let screenx = (w >> 1) + (x | 0);
+                let screenx = (w >> 1) + (x | 0) + Math.abs(offx)
                 let ditherX = ditherOffset + (screenx % 4);
                 let ditherY = screeny % 4;
                 let ditherPixel = Dither.getPixel(ditherX, ditherY);
@@ -152,6 +157,36 @@ namespace imgfx {
             }
         }
         return og
+    }
+
+    export function repeatImage(img: Image, scrollx: number, scrolly: number, maxwidth: number, maxheight: number, scrollable : boolean = false) {
+        let w = img.width
+        let h = img.height
+        let out = image.create(maxwidth, maxheight)
+
+        let x: number;
+        let y: number;
+        if (scrollx >= 0) {
+            x = -Math.floor(scrollx % w);
+        }
+        else {
+            x = -(w - Math.floor(Math.abs(scrollx) % w));
+        }
+
+        if (scrolly >= 0) {
+            y = -Math.floor(scrolly % h);
+        }
+        else {
+            y = -(h - Math.floor(Math.abs(scrolly) % h));
+        }
+
+        for (y; y < maxheight + h; y += h) {
+            for (let x2 = x; x2 < maxwidth + w; x2 += w) {
+                out.drawTransparentImage(img, x2, y)
+            }
+        }
+        
+        return out
     }
 }
 
