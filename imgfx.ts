@@ -95,9 +95,8 @@ namespace imgfx {
         let out = image.create(w, h)
         let buf: Buffer = Buffer.create(w)
         for (let y = 0; y < h; y++) {
-            //let sin = (Math.sin((time / 1000) + (y * stretch)) * stretch)
             let sin = Math.sin(y / 10 + (time / 1000)) * stretch
-            out.blit(0, y, w, h, img, 0, y - sin, w, h, false, false)
+           out.blit(0, y, w, h, img, 0, y - sin, w, h, false, false)
         }
         return out
     }
@@ -126,10 +125,10 @@ namespace imgfx {
         for (let y = 0; y < h; y++) {
             let sin = (Math.sin((time / 1000) + (y * stretch)) * width)
             if (oscillate == true && y % 2 == 0) {
-                //sin *= -1
+                sin *= -1
             }
-            //out.blit(sin, y, w, h, img, 0, y, w, h, false, false)
-            out.blit(0, y+sin, w, h, img, 0, y, w, h, false, false)
+            out.blit(sin, y, w, h, img, 0, y, w, h, false, false)
+            //out.blit(0, y+sin, w, h, img, 0, y, w, h, false, false)
         }
         return out
     }
