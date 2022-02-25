@@ -20,7 +20,6 @@ namespace helpers {
     //declare function _getColumns(img: Image, y: number, dst: Buffer): void;
 
     //declare function _setColumns(img: Image, y: number, dst: Buffer): void;
-
     export function getColumns(img: Image, y : number, dst: Buffer): void {
         let sp = 0
         let w = img.width
@@ -68,12 +67,36 @@ namespace helpers {
 
 
 namespace imgfx {
+
     const Dither = img`
         1 1 1 1 . 1 1 1 . 1 1 1 . 1 1 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . . . 1 . . . 1 . . . 1 . . . .
         1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 . 1 1 1 . 1 1 1 . 1 1 1 . 1 . . . 1 . . . 1 . . . 1 . . . . . . . . . . . . . . . . . . . . .
         1 1 1 1 1 1 1 1 1 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . 1 . . . . . . . . . .
         1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 . 1 . 1 . 1 . 1 . 1 . 1 . . . 1 . . . . . . . . . . . . . . . . . . . . . . . . .
     `;
+    const bayerThresholdMap = [
+        [15, 135, 45, 165],
+        [195, 75, 225, 105],
+        [60, 180, 30, 150],
+        [240, 120, 210, 90]
+    ];
+
+    function ditherRow(buff : Buffer, x : number, threshold : number, col : number = 0, buff2 : Buffer = null) : void {
+        let y = 0
+        let dithering = Math.floor(Math.mod(threshold, 17)) * 16;
+        while (y <= buff.length) {
+            let map = bayerThresholdMap[x % 4][y % 4]
+            if (map < dithering) {
+                if (buff2 != null) {
+                    buff.setUint8(y, buff2[y])
+                } else {
+                    buff.setUint8(y, col)
+                }
+            }
+            y += 1
+        }
+    }
+
     export function squishImageX(img: Image, stretch: number, time: number) {
         let w = img.width
         let h = img.height
@@ -137,25 +160,21 @@ namespace imgfx {
         let w = img.width
         let h = img.height
         //let imageData : number[] = []
-        let og = img.clone()
-        for (let y = 0; y < h; y++) {
-            const screeny = (h >> 1) + (y | 0) - 1 + Math.abs(offy)
-            for (let x = 0; x < w; x++) {
-                const ditherOffset = Math.floor(Math.mod(threshold, 17)) * 4;
-                let screenx = (w >> 1) + (x | 0) + Math.abs(offx)
-                let ditherX = ditherOffset + (screenx % 4);
-                let ditherY = screeny % 4;
-                let ditherPixel = Dither.getPixel(ditherX, ditherY);
-                let shaded = ditherPixel ? 1 : 0;
-                if (shaded>=1) {
-                    og.setPixel(x, y, color)
-                    if (img2 != null) {
-                        og.setPixel(x, y, img2.getPixel(x,y))
-                    }
-                }
-            }
+        let out = img.clone()
+        let buff = Buffer.create(h)
+        let buff2 = null
+        if (img2 != null) {
+            buff2 = Buffer.create(h)
         }
-        return og
+        for (let x = 0; x < w; x++) {
+            out.getRows(x, buff)
+            if (buff2 != null) {
+                img2.getRows(x, buff2)
+            } 
+            ditherRow(buff, x, threshold, color, buff2)
+            out.setRows(x, buff)
+        }
+        return out
     }
 
     export function repeatImage(img: Image, scrollx: number, scrolly: number, maxwidth: number, maxheight: number, scrollable : boolean = false) {
