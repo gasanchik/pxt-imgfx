@@ -192,9 +192,15 @@ namespace imgfx {
         return out
     }
 
-    //% blockId=transform_change_rotation
-    //% block="change rotation of %sprite(mySprite) by %angleChange degrees"
-    //% sprite.shadow="variables_get" angleChange.defl=0
+    //% block="create item with name %name and %image || with description %description"
+    //% blockSetVariable=item
+    //% name.dfl="Name"
+    //% image.shadow=screen_image_picker
+    //% expandableArgumentMode="toggle"
+    //% description.dfl="Description"
+    //% weight=50
+    //% group="Item"
+    //% hidden
     export function heatY(img: Image, stretch: number, height: number, time: number, oscillate : Boolean) {
         let w = img.width
         let h = img.height
