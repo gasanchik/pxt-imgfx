@@ -144,9 +144,8 @@ namespace imgfx {
         }
     }
 
-    //% blockId=transform_change_rotation
-    //% block="change rotation of %sprite(mySprite) by %angleChange degrees"
-    //% sprite.shadow="variables_get" angleChange.defl=0
+    //% blockId=squish_image_x
+    //% block="squish image x %img scretch %stretch time %time "
     export function squishImageX(img: Image, stretch: number, time: number) {
         let w = img.width
         let h = img.height
