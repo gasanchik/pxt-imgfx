@@ -1,4 +1,8 @@
 namespace Math {
+    /**
+     * Loops a number between another number. 16 mod 5 would be 1.
+     */
+    //% block="%a mod %n"
     export function mod(a: number, n: number): number {
         if (n == 0) {
             return a
@@ -6,10 +10,19 @@ namespace Math {
         return (((a % n) + n) % n);
     }
 
+    /**
+     * Generates a new number that this function will only return with the two numbers you put in.
+     */
+    //% block="%x pair %y"
     export function cantorPair(x : number, y : number) {
         return (0.5 * (x + y) * (x + y + 1)) + y;
     }
 
+    /**
+     * Generates a new number that this function will only return with the two numbers you put in.
+     * Works with Negative numbers.
+     */
+    //% block="%x pair %y"
     export function cantorPairSigned(x : number, y : number) {
         const a = (x >= 0.0 ? 2.0 * x : (-2.0 * x) - 1.0);
         const b = (y >= 0.0 ? 2.0 * y : (-2.0 * y) - 1.0);
@@ -86,7 +99,9 @@ namespace helpers {
         return buff;
     }
 
-
+    /**
+     * Gets a palette buffer from a column in a image.
+     */
     export function getBufferFromPalette(img: Image, y: number): Buffer {
         let palleteB = "";
         let buffer: number[] = []
