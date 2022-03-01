@@ -146,7 +146,7 @@ namespace imgfx {
 
     function ditherRow(buff: Buffer, x: number, threshold: number, col: number = 0, buff2: Buffer = null): void {
         let y = 0
-        let dithering = Math.floor(Math.mod(threshold, 65))
+        let dithering = Math.floor(Math.mod(threshold, 65))*16
         while (y <= buff.length) {
             let map = bayerThresholdMap[x % 8][y % 8]
             if (map < dithering + 1) {
