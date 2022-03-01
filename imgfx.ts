@@ -234,11 +234,11 @@ namespace imgfx {
         *@param oscillate: Whetever to oscillate on all even rows.
     */
     //% blockId=heat_image_y
-    //% block="heat image y $img=screen_image_picker scretch $stretch height $height time $time oscillate? $oscillate"
+    //% block="heat image y $img scretch $stretch height $height time $time oscillate? $oscillate"
     //% img.shadow=screen_image_picker
-    //% oscillate.shadow="toggleTrueFalse"
+    //% oscillate.shadow=toggleTrueFalse
     //% inlineInputMode=inline
-    export function heatY(img: Image, stretch: number, height: number, time: number, oscillate : Boolean) {
+    export function heatY(img: Image, stretch: number, height: number, time: number, oscillate : boolean) {
         let w = img.width
         let h = img.height
         const og = img.clone()
@@ -262,11 +262,11 @@ namespace imgfx {
         *@param oscillate: Whetever to oscillate on all even columns.
     */
     //% blockId=heat_image_x
-    //% block="heat image x $img=screen_image_picker scretch $stretch width $width time $time oscillate? $oscillate"
+    //% block="heat image x $img scretch $stretch height $height time $time oscillate? $oscillate"
     //% img.shadow=screen_image_picker
-    //% oscillate.shadow="toggleTrueFalse"
+    //% oscillate.shadow=toggleTrueFalse
     //% inlineInputMode=inline
-    export function heatX(img: Image, stretch: number, width: number, time: number, oscillate: Boolean) {
+    export function heatX(img: Image, stretch: number, width: number, time: number, oscillate: boolean) {
         let w = img.width
         let h = img.height
         const og = img.clone()
@@ -376,7 +376,7 @@ namespace imgfx {
     //% blockId=optimized_dither
     //% block="repeat image $img=screen_image_picker maxwidth $maxwidth maxheight $maxheight scrollx $scrollx scrolly $scrolly scrollable $scrollable"
     //% img.shadow=screen_image_picker
-    //% scrollable.shadow="toggleTrueFalse"
+    //% oscillate.shadow=toggleTrueFalse
     //% inlineInputMode=inline
     export function repeatImage(img: Image, maxwidth: number, maxheight: number, scrollx: number = 0, scrolly: number = 0, scrollable : boolean = false) {
         let w = img.width
