@@ -2,7 +2,7 @@ namespace Math {
     /**
      * Loops a number between another number. 16 mod 5 would be 1.
      */
-    //% block="%a mod %n"
+    //% block="%a mod $n"
     export function mod(a: number, n: number): number {
         if (n == 0) {
             return a
@@ -13,7 +13,7 @@ namespace Math {
     /**
      * Generates a new number that this function will only return with the two numbers you put in.
      */
-    //% block="%x pair %y"
+    //% block="%x pair $y"
     export function cantorPair(x : number, y : number) {
         return (0.5 * (x + y) * (x + y + 1)) + y;
     }
@@ -22,7 +22,7 @@ namespace Math {
      * Generates a new number that this function will only return with the two numbers you put in.
      * Works with Negative numbers.
      */
-    //% block="%x pair %y"
+    //% block="%x pair $y"
     export function cantorPairSigned(x : number, y : number) {
         const a = (x >= 0.0 ? 2.0 * x : (-2.0 * x) - 1.0);
         const b = (y >= 0.0 ? 2.0 * y : (-2.0 * y) - 1.0);
@@ -167,7 +167,7 @@ namespace imgfx {
         *@param time: Put game.runtime in time, or put any number you want in it. Acts as the frame of the animation.
     */
     //% blockId=squish_image_x
-    //% block="squish image x %img=screen_image_picker scretch %stretch time %time"
+    //% block="squish image x $img=screen_image_picker scretch $stretch time $time"
     //% img.shadow=screen_image_picker
     //% inlineInputMode=inline
     export function squishImageX(img : Image, stretch: number, time: number) {
@@ -192,7 +192,7 @@ namespace imgfx {
         *@param time: Put game.runtime in time, or put any number you want in it. Acts as the frame of the animation.
     */
     //% blockId=squish_image_y
-    //% block="squish image y %img=screen_image_picker scretch %stretch time %time"
+    //% block="squish image y $img=screen_image_picker scretch $stretch time $time"
     //% img.shadow=screen_image_picker
     //% inlineInputMode=inline
     export function squishImageY(img: Image, stretch: number, time: number) {
@@ -234,7 +234,7 @@ namespace imgfx {
         *@param oscillate: Whetever to oscillate on all even rows.
     */
     //% blockId=heat_image_y
-    //% block="heat image y %img=screen_image_picker scretch %stretch height %height time %time oscillate? %oscillate"
+    //% block="heat image y $img=screen_image_picker scretch $stretch height $height time $time oscillate? $oscillate"
     //% img.shadow=screen_image_picker
     //% oscillate.shadow="toggleTrueFalse"
     //% inlineInputMode=inline
@@ -262,7 +262,7 @@ namespace imgfx {
         *@param oscillate: Whetever to oscillate on all even columns.
     */
     //% blockId=heat_image_x
-    //% block="heat image x %img=screen_image_picker scretch %stretch width %width time %time oscillate? %oscillate"
+    //% block="heat image x $img=screen_image_picker scretch $stretch width $width time $time oscillate? $oscillate"
     //% img.shadow=screen_image_picker
     //% oscillate.shadow="toggleTrueFalse"
     //% inlineInputMode=inline
@@ -292,7 +292,7 @@ namespace imgfx {
         *@param imgTo: Image to dither to if there is one.
     */
     //% blockId=true_dither
-    //% block="true dither image imgFrom %imgFrom=screen_image_picker threshold %threshold color %color imgTo %imgTo=screen_image_picker"
+    //% block="true dither image imgFrom $imgFrom=screen_image_picker threshold $threshold color $color imgTo $imgTo=screen_image_picker"
     //% imgFrom.shadow=screen_image_picker
     //% imgTo.shadow=screen_image_picker
     //% inlineInputMode=inline
@@ -325,7 +325,7 @@ namespace imgfx {
         *@param imgTo: Image to dither to if there is one.
     */
     //% blockId=optimized_dither
-    //% block="optimized dither image imgFrom %imgFrom=screen_image_picker threshold %threshold color %color imgTo %imgTo=screen_image_picker"
+    //% block="optimized dither image imgFrom $imgFrom=screen_image_picker threshold $threshold color $color imgTo $imgTo=screen_image_picker"
     //% imgFrom.shadow=screen_image_picker
     //% imgTo.shadow=screen_image_picker
     //% inlineInputMode=inline
@@ -374,7 +374,7 @@ namespace imgfx {
         *@param scrollable: Whetever to scroll infinitely.
     */
     //% blockId=optimized_dither
-    //% block="repeat image %img=screen_image_picker maxwidth %maxwidth maxheight %maxheight scrollx %scrollx scrolly %scrolly scrollable %scrollable"
+    //% block="repeat image $img=screen_image_picker maxwidth $maxwidth maxheight $maxheight scrollx $scrollx scrolly $scrolly scrollable $scrollable"
     //% img.shadow=screen_image_picker
     //% scrollable.shadow="toggleTrueFalse"
     //% inlineInputMode=inline
