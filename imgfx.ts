@@ -166,7 +166,7 @@ namespace imgfx {
         *@param stretch: How much the image gets stretched.
         *@param time: Put game.runtime in time, or put any number you want in it. Acts as the frame of the animation.
     */
-    //% blockId=squish_image_x
+    // blockId=squish_image_x
     //% block="squish image x $img=screen_image_picker scretch $stretch time $time"
     // img.shadow=screen_image_picker
     //% inlineInputMode=inline
@@ -191,7 +191,7 @@ namespace imgfx {
         *@param stretch: How much the image gets stretched.
         *@param time: Put game.runtime in time, or put any number you want in it. Acts as the frame of the animation.
     */
-    //% blockId=squish_image_y
+    // blockId=squish_image_y
     //% block="squish image y $img=screen_image_picker scretch $stretch time $time"
     //% img.shadow=screen_image_picker
     //% inlineInputMode=inline
@@ -233,7 +233,7 @@ namespace imgfx {
         *@param height: How high the heat effect's max height and min height is.
         *@param oscillate: Whetever to oscillate on all even rows.
     */
-    //% blockId=heat_image_y
+    // blockId=heat_image_y
     //% block="heat image y $img scretch $stretch height $height time $time oscillate? $oscillate"
     //% img.shadow=screen_image_picker
     // oscillate.shadow=toggleTrueFalse
@@ -261,7 +261,7 @@ namespace imgfx {
         *@param height: How high the heat effect's max width and min width is.
         *@param oscillate: Whetever to oscillate on all even columns.
     */
-    //% blockId=heat_image_x
+    // blockId=heat_image_x
     //% block="heat image x $img scretch $stretch height $height time $time oscillate? $oscillate"
     //% img.shadow=screen_image_picker
     // oscillate.shadow=toggleTrueFalse
@@ -291,7 +291,7 @@ namespace imgfx {
         *@param color: Color to dither to if imgTo is null.
         *@param imgTo: Image to dither to if there is one.
     */
-    //% blockId=true_dither
+    // blockId=true_dither
     //% block="true dither image imgFrom $imgFrom=screen_image_picker threshold $threshold color $color imgTo $imgTo=screen_image_picker"
     //% imgFrom.shadow=screen_image_picker
     //% imgTo.shadow=screen_image_picker
@@ -324,7 +324,7 @@ namespace imgfx {
         *@param color: Color to dither to if imgTo is null.
         *@param imgTo: Image to dither to if there is one.
     */
-    //% blockId=optimized_dither
+    // blockId=optimized_dither
     //% block="optimized dither image imgFrom $imgFrom=screen_image_picker threshold $threshold color $color imgTo $imgTo=screen_image_picker"
     //% imgFrom.shadow=screen_image_picker
     //% imgTo.shadow=screen_image_picker
@@ -373,7 +373,7 @@ namespace imgfx {
         *@param scrolly: Scroll y.
         *@param scrollable: Whetever to scroll infinitely.
     */
-    //% blockId=repeat_image_id
+    // blockId=repeat_image_id
     //% block="repeat image $img=screen_image_picker maxwidth $maxwidth maxheight $maxheight scrollx $scrollx scrolly $scrolly scrollable $scrollable"
     //% img.shadow=screen_image_picker
     // oscillate.shadow=toggleTrueFalse
