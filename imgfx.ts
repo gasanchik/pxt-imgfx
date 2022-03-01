@@ -115,7 +115,7 @@ namespace helpers {
     }
 }
 
-//% color=190 weight=10 icon="\f1fb" block="Image effects" advanced=true
+//% color=190 weight=10 icon="\uff1fb" block="Image effects" advanced=true
 namespace imgfx {
     /*
     const bayerThresholdMap = [
