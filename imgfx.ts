@@ -115,6 +115,7 @@ namespace helpers {
     }
 }
 
+//% color=190 weight=100 icon="\bolt icon" block="Image effects"
 namespace imgfx {
     /*
     const bayerThresholdMap = [
