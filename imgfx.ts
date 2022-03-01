@@ -115,7 +115,7 @@ namespace helpers {
     }
 }
 
-//% color=190 weight=100 icon="\bolt icon" block="Image effects"
+//% color=190 weight=10 icon="\f1fb" block="Image effects" advanced=true
 namespace imgfx {
     /*
     const bayerThresholdMap = [
@@ -167,7 +167,8 @@ namespace imgfx {
         *@param time: Put game.runtime in time, or put any number you want in it. Acts as the frame of the animation.
     */
     //% blockId=squish_image_x
-    //% block="squish image x %img scretch %stretch time %time"
+    //% block= block = field, { '|' field } field:= string string`%` parameter[`=` type ] parameter = string type = string
+    //"squish image x %img scretch %stretch time %time"
     export function squishImageX(img: Image, stretch: number, time: number) {
         let w = img.width
         let h = img.height
@@ -181,9 +182,6 @@ namespace imgfx {
         return out
     }
 
-    //% blockId=transform_change_rotation
-    //% block="change rotation of %sprite(mySprite) by %angleChange degrees"
-    //% sprite.shadow="variables_get" angleChange.defl=0
     export function squishImageY(img: Image, stretch: number, time: number) {
         let w = img.width
         let h = img.height
@@ -214,15 +212,6 @@ namespace imgfx {
         return out
     }
 
-    //% block="create item with name %name and %image || with description %description"
-    //% blockSetVariable=item
-    //% name.dfl="Name"
-    //% image.shadow=screen_image_picker
-    //% expandableArgumentMode="toggle"
-    //% description.dfl="Description"
-    //% weight=50
-    //% group="Item"
-    //% hidden
     export function heatY(img: Image, stretch: number, height: number, time: number, oscillate : Boolean) {
         let w = img.width
         let h = img.height
@@ -238,9 +227,6 @@ namespace imgfx {
         return out
     }
 
-    //% blockId=transform_change_rotation
-    //% block="change rotation of %sprite(mySprite) by %angleChange degrees"
-    //% sprite.shadow="variables_get" angleChange.defl=0
     export function heatX(img: Image, stretch: number, width: number, time: number, oscillate: Boolean) {
         let w = img.width
         let h = img.height
@@ -258,9 +244,6 @@ namespace imgfx {
         return out
     }
 
-    //% blockId=transform_change_rotation
-    //% block="change rotation of %sprite(mySprite) by %angleChange degrees"
-    //% sprite.shadow="variables_get" angleChange.defl=0
     export function trueDither(imgFrom: Image, threshold: number, color: number = 0, imgTo: Image = null, offx: number = 0, offy: number = 0) {
         let w = imgFrom.width
         let h = imgFrom.height
@@ -282,9 +265,6 @@ namespace imgfx {
         return out
     }
 
-    //% blockId=transform_change_rotation
-    //% block="change rotation of %sprite(mySprite) by %angleChange degrees"
-    //% sprite.shadow="variables_get" angleChange.defl=0
     export function optimizedDither(imgFrom: Image, threshold: number, color: number = 0, imgTo: Image = null, offx: number = 0, offy: number = 0) {
         let w = imgFrom.width
         let h = imgFrom.height
