@@ -373,7 +373,7 @@ namespace imgfx {
         *@param scrolly: Scroll y.
         *@param scrollable: Whetever to scroll infinitely.
     */
-    //% blockId=repeat_image
+    //% blockId=repeat_image_id
     //% block="repeat image $img=screen_image_picker maxwidth $maxwidth maxheight $maxheight scrollx $scrollx scrolly $scrolly scrollable $scrollable"
     //% img.shadow=screen_image_picker
     // oscillate.shadow=toggleTrueFalse
