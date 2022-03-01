@@ -168,7 +168,7 @@ namespace imgfx {
     */
     //% blockId=squish_image_x
     //% block="squish image x $img=screen_image_picker scretch $stretch time $time"
-    //% img.shadow=screen_image_picker
+    // img.shadow=screen_image_picker
     //% inlineInputMode=inline
     export function squishImageX(img : Image, stretch: number, time: number) {
         let w = img.width
@@ -236,7 +236,7 @@ namespace imgfx {
     //% blockId=heat_image_y
     //% block="heat image y $img scretch $stretch height $height time $time oscillate? $oscillate"
     //% img.shadow=screen_image_picker
-    //% oscillate.shadow=toggleTrueFalse
+    // oscillate.shadow=toggleTrueFalse
     //% inlineInputMode=inline
     export function heatY(img: Image, stretch: number, height: number, time: number, oscillate : boolean) {
         let w = img.width
@@ -264,7 +264,7 @@ namespace imgfx {
     //% blockId=heat_image_x
     //% block="heat image x $img scretch $stretch height $height time $time oscillate? $oscillate"
     //% img.shadow=screen_image_picker
-    //% oscillate.shadow=toggleTrueFalse
+    // oscillate.shadow=toggleTrueFalse
     //% inlineInputMode=inline
     export function heatX(img: Image, stretch: number, width: number, time: number, oscillate: boolean) {
         let w = img.width
@@ -376,7 +376,7 @@ namespace imgfx {
     //% blockId=optimized_dither
     //% block="repeat image $img=screen_image_picker maxwidth $maxwidth maxheight $maxheight scrollx $scrollx scrolly $scrolly scrollable $scrollable"
     //% img.shadow=screen_image_picker
-    //% oscillate.shadow=toggleTrueFalse
+    // oscillate.shadow=toggleTrueFalse
     //% inlineInputMode=inline
     export function repeatImage(img: Image, maxwidth: number, maxheight: number, scrollx: number = 0, scrolly: number = 0, scrollable : boolean = false) {
         let w = img.width
