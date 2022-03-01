@@ -179,8 +179,8 @@ namespace imgfx {
             img.getRows(Math.mod(Math.mod(sin + x, w), w), buf)
             out.setRows(x, buf)
         }
-        img = out
-        //return out
+
+        return out
     }
 
     export function squishImageY(img: Image, stretch: number, time: number) {
