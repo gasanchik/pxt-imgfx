@@ -168,8 +168,8 @@ namespace imgfx {
     */
     //% blockId=squish_image_x
     //% block= block = field, { '|' field } field:= string string`%` parameter[`=` type ] parameter = string type = string
-    //"squish image x %img scretch %stretch time %time"
-    export function squishImageX(img: Image, stretch: number, time: number) {
+    //"squish image x %img=screen_image_picker scretch %stretch time %time"
+    export function squishImageX(img : Image, stretch: number, time: number) {
         let w = img.width
         let h = img.height
         let out = image.create(w, h)
