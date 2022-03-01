@@ -146,7 +146,7 @@ namespace imgfx {
 
     function ditherRow(buff: Buffer, x: number, threshold: number, col: number = 0, buff2: Buffer = null): void {
         let y = 0
-        let dithering = Math.floor(Math.mod(threshold, 65))*16
+        let dithering = Math.floor(Math.mod(threshold, 65))
         while (y <= buff.length) {
             let map = bayerThresholdMap[x % 8][y % 8]
             if (map < dithering + 1) {
@@ -287,7 +287,7 @@ namespace imgfx {
     /**
         *Does a true dither. Works best with small images. When doing this effect on hardware at fullscreen, use optimized dither instead.
         *@param imgFrom: The image that gets affected.
-        *@param threshold: 1-16, decides how much to dither.
+        *@param threshold: 1-65, decides how much to dither.
         *@param color: Color to dither to if imgTo is null.
         *@param imgTo: Image to dither to if there is one.
     */
@@ -320,7 +320,7 @@ namespace imgfx {
     /**
         *Does a optimized dither. To do this, the white color of imgFrom is sacrificed and replaced with white gray. If imgFrom is transparent, imgTo will show trough it.
         *@param imgFrom: The image that gets affected.
-        *@param threshold: 1-16, decides how much to dither.
+        *@param threshold: 1-65, decides how much to dither.
         *@param color: Color to dither to if imgTo is null.
         *@param imgTo: Image to dither to if there is one.
     */
