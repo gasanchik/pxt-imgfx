@@ -166,7 +166,7 @@ namespace imgfx {
         *@param time: Put game.runtime in time, or put any number you want in it. Acts as the frame of the animation.
     */
     //% blockId=squish_image_x
-    //% block="squish image x $img scretch %stretch time %time "
+    //% block="squish image x %img scretch %stretch time %time"
     export function squishImageX(img: Image, stretch: number, time: number) {
         let w = img.width
         let h = img.height
