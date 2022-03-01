@@ -159,8 +159,14 @@ namespace imgfx {
         }
     }
 
+    /*
+        *Makes a squishy effect on any image in the X axis.
+        *@param image: The image that gets affected.
+        *@param stretch: How much the image gets stretched.
+        *@param time: Put game.runtime in time, or put any number you want in it. Acts as the frame of the animation.
+    */
     //% blockId=squish_image_x
-    //% block="squish image x %img scretch %stretch time %time "
+    //% block="squish image x $img scretch %stretch time %time "
     export function squishImageX(img: Image, stretch: number, time: number) {
         let w = img.width
         let h = img.height
