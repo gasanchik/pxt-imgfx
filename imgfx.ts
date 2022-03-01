@@ -167,8 +167,8 @@ namespace imgfx {
         *@param time: Put game.runtime in time, or put any number you want in it. Acts as the frame of the animation.
     */
     //% blockId=squish_image_x
-    //% block= block = field, { '|' field } field:= string string`%` parameter[`=` type ] parameter = string type = string
-    //"squish image x %img=screen_image_picker scretch %stretch time %time"
+    //% block="squish image x %img=screen_image_picker scretch %stretch time %time"
+    //% img.shadow=screen_image_picker
     export function squishImageX(img : Image, stretch: number, time: number) {
         let w = img.width
         let h = img.height
@@ -183,6 +183,16 @@ namespace imgfx {
         return out
     }
 
+
+    /*
+        *Makes a squishy effect on any image in the Y axis.
+        *@param image: The image that gets affected.
+        *@param stretch: How much the image gets stretched.
+        *@param time: Put game.runtime in time, or put any number you want in it. Acts as the frame of the animation.
+    */
+    //% blockId=squish_image_y
+    //% block="squish image y %img=screen_image_picker scretch %stretch time %time"
+    //% img.shadow=screen_image_picker
     export function squishImageY(img: Image, stretch: number, time: number) {
         let w = img.width
         let h = img.height
@@ -213,6 +223,17 @@ namespace imgfx {
         return out
     }
 
+    /*
+        *Makes a heat effect on any image in the Y axis. Very laggy, not suitable on hardware.
+        *@param image: The image that gets affected.
+        *@param stretch: The width/amplitude of the heat effect.
+        *@param time: Put game.runtime in time, or put any number you want in it. Acts as the frame of the animation.
+        *@param height: How high the heat effect's max height and min height is.
+        *@param oscillate: Whetever to oscillate on all even rows.
+    */
+    //% blockId=heat_image_y
+    //% block="heat image y %img=screen_image_picker scretch %stretch height %height time %time oscillate? %oscillate"
+    //% img.shadow=screen_image_picker
     export function heatY(img: Image, stretch: number, height: number, time: number, oscillate : Boolean) {
         let w = img.width
         let h = img.height
@@ -228,6 +249,17 @@ namespace imgfx {
         return out
     }
 
+    /*
+        *Makes a heat effect on any image in the X axis. Very laggy, not suitable on hardware.
+        *@param image: The image that gets affected.
+        *@param stretch: The height/amplitude of the heat effect.
+        *@param time: Put game.runtime in time, or put any number you want in it. Acts as the frame of the animation.
+        *@param height: How high the heat effect's max width and min width is.
+        *@param oscillate: Whetever to oscillate on all even columns.
+    */
+    //% blockId=heat_image_x
+    //% block="heat image x %img=screen_image_picker scretch %stretch width %width time %time oscillate? %oscillate"
+    //% img.shadow=screen_image_picker
     export function heatX(img: Image, stretch: number, width: number, time: number, oscillate: Boolean) {
         let w = img.width
         let h = img.height
@@ -245,6 +277,18 @@ namespace imgfx {
         return out
     }
 
+
+    /*
+        *Does a true dither. Works best with small images. When doing this effect on hardware at fullscreen, use optimized dither instead.
+        *@param imgFrom: The image that gets affected.
+        *@param threshold: 1-16, decides how much to dither.
+        *@param color: Color to dither to if imgTo is null.
+        *@param imgTo: Image to dither to if there is one.
+    */
+    //% blockId=true_dither
+    //% block="true dither image imgFrom %imgFrom=screen_image_picker threshold %threshold color %color imgTo %imgTo=screen_image_picker"
+    //% imgFrom.shadow=screen_image_picker
+    //% imgTo.shadow=screen_image_picker
     export function trueDither(imgFrom: Image, threshold: number, color: number = 0, imgTo: Image = null, offx: number = 0, offy: number = 0) {
         let w = imgFrom.width
         let h = imgFrom.height
@@ -266,6 +310,17 @@ namespace imgfx {
         return out
     }
 
+    /*
+        *Does a optimized dither. To do this, the white color of imgFrom is sacrificed and replaced with white gray. If imgFrom is transparent, imgTo will show trough it.
+        *@param imgFrom: The image that gets affected.
+        *@param threshold: 1-16, decides how much to dither.
+        *@param color: Color to dither to if imgTo is null.
+        *@param imgTo: Image to dither to if there is one.
+    */
+    //% blockId=optimized_dither
+    //% block="optimized dither image imgFrom %imgFrom=screen_image_picker threshold %threshold color %color imgTo %imgTo=screen_image_picker"
+    //% imgFrom.shadow=screen_image_picker
+    //% imgTo.shadow=screen_image_picker
     export function optimizedDither(imgFrom: Image, threshold: number, color: number = 0, imgTo: Image = null, offx: number = 0, offy: number = 0) {
         let w = imgFrom.width
         let h = imgFrom.height
@@ -300,6 +355,17 @@ namespace imgfx {
         return out
     }
 
+
+    /*
+        *Does a optimized dither. To do this, the white color of imgFrom is sacrificed and replaced with white gray. If imgFrom is transparent, imgTo will show trough it.
+        *@param imgFrom: The image that gets affected.
+        *@param threshold: 1-16, decides how much to dither.
+        *@param color: Color to dither to if imgTo is null.
+        *@param imgTo: Image to dither to if there is one.
+    */
+    //% blockId=optimized_dither
+    //% block="repeat image image x %img=screen_image_picker scretch %stretch height %height time %time oscillate? %oscillate"
+    //% img.shadow=screen_image_picker
     export function repeatImage(img: Image, maxwidth: number, maxheight: number, scrollx: number = 0, scrolly: number = 0, scrollable : boolean = false) {
         let w = img.width
         let h = img.height
