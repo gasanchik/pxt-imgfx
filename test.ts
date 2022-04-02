@@ -257,7 +257,7 @@ scene.createRenderable(0, (target: Image, camera: scene.Camera) => {
     //img1 = imgfx.squishImageY(img1, 3, game.runtime() * 2)
     //img1 = imgfx.heatY(img1, 0.1, 5, game.runtime() * 5, true)
     //img1 = imgfx.repeatImage(img1, x, y, 160, 120)
-    img1 = imgfx.optimizedDither(img1, a, 0, img2)
+    img1 = imgfx.blurimg(img2, a)
     scene.setBackgroundImage(img1)
     if (controller.A.isPressed()) {
         //a-=1

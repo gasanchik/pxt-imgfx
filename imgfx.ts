@@ -398,7 +398,7 @@ namespace imgfx {
         else {
             y = -(h - Math.floor(Math.abs(scrolly) % h));
         }
-
+out
         if (scrollable == false) {
             x = scrollx
             y = scrolly
@@ -410,6 +410,29 @@ namespace imgfx {
             }
         }
         
+        return out
+    }
+
+    /**
+        *Blurs an image by getting random pixels around a pixel by @blur.
+        *@param img: The image that gets affected.
+        *@param blur: Amount of blur.
+    */
+    // blockId=repeat_image_id
+    //% block="repeat image $img=screen_image_picker blur $blur"
+    //% img.shadow=screen_image_picker
+    //% inlineInputMode=inline
+    export function blurimg(img: Image, blur: number) {
+        let w = img.width
+        let h = img.height
+        let out = image.create(w, h)
+        let buff = Buffer.create(h)
+        for (let x = 0; x < w; x++) {
+            for (let y = 0; y < h; y++) {
+                buff[y] = img.getPixel(Math.mod(x + randint(-blur, blur), w), Math.mod(y + randint(-blur, blur), h))
+            }
+            out.setRows(x, buff)
+        }
         return out
     }
 }
